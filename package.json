@@ -1,0 +1,30 @@
+{
+  "name": "express",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "3.2.3",
+    "nodemon": "0.7.8"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-cssmin": "~0.6.0",
+    "grunt-contrib-watch": "~0.4.0"
+  },
+  "description": "Express JS Static Boilerplate ============================",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weblancaster/expressjs-static-boilerplate"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weblancaster/expressjs-static-boilerplate/issues"
+  },
+  "homepage": "https://github.com/weblancaster/expressjs-static-boilerplate"
+}
