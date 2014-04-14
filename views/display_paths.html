@@ -1,0 +1,102 @@
+<html>
+  <header>
+    <title>Hello there</title>
+  </header>
+  <head>
+    <meta charset="utf-8">
+    <title>Rabbithole</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <link rel="stylesheet" href="/public/stylesheets/app.css">
+  </head>
+  <body role="document" style="">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Rabbithole</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div id="main_title" class="jumbotron">
+        <h1>Rabbithole</h1>
+        <p>A site for wasting time and exploring Internet rabbitholes.</p>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Option 1</h3>
+            </div>
+            <div class="panel-body" id="path_one"></div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Option 2</h3>
+            </div>
+            <div class="panel-body" id="path_two"></div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Option 3</h3>
+            </div>
+            <div class="panel-body" id="path_three"></div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+      </div>
+    </div>
+    <script>
+      function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
+      function googleLink(link_text) {
+        return "<a href=\"https://www.google.com#q=" + link_text + "\">" + link_text + "</a>"
+      }
+
+      function goAgain(link_text) {
+        return "<a href=\"./display_paths.html?base=" + link_text + "\">" + link_text + "</a>"
+      }
+
+      var worked = function(data) {
+        var $xml = $(data);
+        var $results = $xml.find("Result Text");
+        $("#path_one").html(goAgain($($results[0]).text()));
+        $("#path_two").html(goAgain($($results[1]).text()));
+        $("#path_three").html(goAgain($($results[2]).text()));
+      }
+      var api_key = "24be2c9e251e33f63b367301a1011dfd";
+      var url = "http://www.veryrelated.com/related-api-v1.php?";
+      var word_for_page = getParameterByName("base");
+      url += "key=" + api_key + "&";
+      url += "base=" + word_for_page;
+      $("#main_title").html("<h1>" + googleLink(word_for_page) + "</h1>");
+      var xml = $.get(url, worked, "xml");
+    </script>
+  </body>
+</html>
