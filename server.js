@@ -4,12 +4,12 @@ var express = require("express"),
 
 var pub = __dirname + '/public',
 	view = __dirname + '/views';
-   
+
 app.configure(function(){
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(app.router);
-	app.use(express.static(pub));
+	app.use("/public", express.static(pub));
 	app.use(express.static(view));
 	app.use(express.errorHandler());
 });
