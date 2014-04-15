@@ -7,24 +7,20 @@
   },
   "dependencies": {
     "express": "3.2.3",
-    "nodemon": "0.7.8"
+    "ejs": "^1.0.0",
+    "request": "^2.34.0",
+    "xmldoc": "^0.1.2"
   },
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-cssmin": "~0.6.0",
-    "grunt-contrib-watch": "~0.4.0"
-  },
-  "description": "Express JS Static Boilerplate ============================",
+  "description": "Website for traversing Internet rabbit holes",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/weblancaster/expressjs-static-boilerplate"
+    "url": "git@heroku.com:rabbithole-309k.git"
   },
-  "author": "",
+  "author": "Spencer Sullivan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/weblancaster/expressjs-static-boilerplate/issues"
+    "url": "git@heroku.com:rabbithole-309k.git"
   },
-  "homepage": "https://github.com/weblancaster/expressjs-static-boilerplate"
+  "homepage": "rabbithole-309k.herokuapp.com"
 }

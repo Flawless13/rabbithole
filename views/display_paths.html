@@ -36,7 +36,7 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div id="main_title" class="jumbotron">
-        <a href="https://www.google.com#q="></a>
+        <h1><a href="https://www.google.com#q=<%= base %>"><%= base %></a></h1>
       </div>
 
       <div class="row">
@@ -45,7 +45,9 @@
             <div class="panel-heading">
               <h3 class="panel-title text-center">Option 1</h3>
             </div>
-            <div class="panel-body" id="path_one"></div>
+            <div class="panel-body" id="path_one">
+              <a href="./display_paths.html?base=<%= first %>"><%= first %></a>
+            </div>
           </div>
         </div><!-- /.col-sm-4 -->
         <div class="col-sm-4">
@@ -53,7 +55,9 @@
             <div class="panel-heading">
               <h3 class="panel-title text-center">Option 2</h3>
             </div>
-            <div class="panel-body" id="path_two"></div>
+            <div class="panel-body" id="path_two">
+              <a href="./display_paths.html?base=<%= second %>"><%= second %></a>
+            </div>
           </div>
         </div><!-- /.col-sm-4 -->
         <div class="col-sm-4">
@@ -61,42 +65,12 @@
             <div class="panel-heading">
               <h3 class="panel-title text-center">Option 3</h3>
             </div>
-            <div class="panel-body" id="path_three"></div>
+            <div class="panel-body" id="path_three">
+              <a href="./display_paths.html?base=<%= third %>"><%= third %></a>
+            </div>
           </div>
         </div><!-- /.col-sm-4 -->
       </div>
     </div>
-    <script>
-      $("#main_title").href += #{base}
-      // function getParameterByName(name) {
-      //   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      //   var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-      //   results = regex.exec(location.search);
-      //   return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-      // }
-
-      // function googleLink(link_text) {
-      //   return "<a href=\"https://www.google.com#q=" + link_text + "\">" + link_text + "</a>"
-      // }
-
-      // function goAgain(link_text) {
-      //   return "<a href=\"./display_paths.html?base=" + link_text + "\">" + link_text + "</a>"
-      // }
-
-      // var worked = function(data) {
-      //   var $xml = $(data);
-      //   var $results = $xml.find("Result Text");
-      //   $("#path_one").html(goAgain($($results[0]).text()));
-      //   $("#path_two").html(goAgain($($results[1]).text()));
-      //   $("#path_three").html(goAgain($($results[2]).text()));
-      // }
-      // var api_key = "24be2c9e251e33f63b367301a1011dfd";
-      // var url = "http://www.veryrelated.com/related-api-v1.php?";
-      // var word_for_page = getParameterByName("base");
-      // url += "key=" + api_key + "&";
-      // url += "base=" + word_for_page;
-      // $("#main_title").html("<h1>" + googleLink(word_for_page) + "</h1>");
-      // var xml = $.get(url, worked, "xml");
-    </script>
   </body>
 </html>
