@@ -33,11 +33,13 @@ app.get("/display_paths.html", function (req, res) {
             var first = results[0].childNamed("Text").val;
             var second = results[1].childNamed("Text").val;
             var third = results[2].childNamed("Text").val;
+            var words = [];
+            for(var i = 0; i < results.length; i++) {
+                words.push(results[i].childNamed("Text").val);
+            }
             res.render('display_paths.html', {
                 base: base,
-                first: first,
-                second: second,
-                third: third
+                words: words
             });
         }
     });

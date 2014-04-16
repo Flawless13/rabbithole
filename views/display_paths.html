@@ -28,48 +28,31 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="about.html">About</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
     </div>
 
     <div class="container theme-showcase" role="main">
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
       <div id="main_title" class="jumbotron">
         <h1><a href="https://www.google.com#q=<%= base %>"><%= base %></a></h1>
       </div>
 
       <div class="row">
-        <div class="col-sm-4">
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title text-center">Option 1</h3>
+        <% if(words.length) { %>
+          <% words.forEach(function (word, index) { %>
+            <div class="col-sm-4">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title text-center">Option <%= index + 1 %></h3>
+                </div>
+                <div class="panel-body" id="path_one">
+                  <a href="./display_paths.html?base=<%= word %>"><%= word %></a>
+                </div>
+              </div>
             </div>
-            <div class="panel-body" id="path_one">
-              <a href="./display_paths.html?base=<%= first %>"><%= first %></a>
-            </div>
-          </div>
-        </div><!-- /.col-sm-4 -->
-        <div class="col-sm-4">
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title text-center">Option 2</h3>
-            </div>
-            <div class="panel-body" id="path_two">
-              <a href="./display_paths.html?base=<%= second %>"><%= second %></a>
-            </div>
-          </div>
-        </div><!-- /.col-sm-4 -->
-        <div class="col-sm-4">
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title text-center">Option 3</h3>
-            </div>
-            <div class="panel-body" id="path_three">
-              <a href="./display_paths.html?base=<%= third %>"><%= third %></a>
-            </div>
-          </div>
-        </div><!-- /.col-sm-4 -->
+          <% }) %>
+        <% } %>
       </div>
     </div>
   </body>
