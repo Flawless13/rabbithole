@@ -50,14 +50,33 @@ function isEmpty(ob) {
 
 app.get("/history.html", function(req, res) {
     if(req.session.visited && req.session.visited.length > 0) {
-        res.render('history.html', {
-            history: req.session.visited,
-            started: req.session.started.toString()
-        });
+        if(req.session.started) {
+            res.render('history.html', {
+                history: req.session.visited,
+                started: req.session.started.toString()
+            });
+        } else {
+            res.render('history.html', {
+                history: req.session.visited,
+                started: (new Date()).toString()
+            });
+        }
     } else {
         res.render('history.html', {
             history: ["No History"],
             started: (new Date()).toString()
+        });
+    }
+})
+
+app.get("/pretty.html", function(req, res) {
+    if(req.session.visited && req.session.visited.length > 0) {
+        res.render('pretty.html', {
+            words: req.session.visited
+        });
+    } else {
+        res.render('pretty.html', {
+            words: ["No Words"]
         });
     }
 })
