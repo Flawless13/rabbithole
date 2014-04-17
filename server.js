@@ -1,17 +1,18 @@
-var request = require('request');
-var xmldoc = require('xmldoc');
-var express = require("express"),
+var request = require('request')
+    xmldoc = require('xmldoc')
+    express = require("express"),
 	app = express(),
 	port = process.env.PORT || 3000;
+    NodeCache = require("node-cache");
+    myCache = new NodeCache();
 app.engine('html', require('ejs').__express);
 
 var pub = __dirname + '/public',
 	view = __dirname + '/views';
 
-var NodeCache = require( "node-cache" );
-var myCache = new NodeCache();
-
 app.configure(function(){
+    app.use(express.cookieParser());
+    app.use(express.session({secret: '1234567890QWERTY'}));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(app.router);
@@ -24,6 +25,11 @@ app.get("/views", function(req, res) {
  	res.render('index.html');
 });
 
+app.get("/index.html", function(req, res) {
+    req.session.visited = [];
+    res.render("index.html");
+})
+
 var stopwords = [];
 require('fs').readFile('stopwords.txt', function(err, data) {
     if(err) throw err;
@@ -35,24 +41,47 @@ require('fs').readFile('stopwords.txt', function(err, data) {
 });
 
 function isEmpty(ob) {
-   for(var i in ob){ return false;}
-  return true;
+    for(var i in ob) {
+        return false;
+    }
+    return true;
 }
 
+app.get("/history.html", function(req, res) {
+    if(req.session.visited && req.session.visited.length > 0) {
+        res.render('history.html', {
+            history: req.session.visited
+        });
+    } else {
+        res.render('history.html', {
+            history: ["No History"]
+        });
+    }
+})
+
 app.get("/display_paths.html", function (req, res) {
-    var api_key = "24be2c9e251e33f63b367301a1011dfd";
     var base = req.query.base;
+    // keep track of what pages each user has visited
+    var visited = req.session.visited;
+    if(visited) {
+        if(visited[visited.length - 1] != base)
+            req.session.visited.push(base);
+    } else {
+        req.session.visited = [base];
+    }
+    // console.log(req.session.visited);
+    var api_key = "24be2c9e251e33f63b367301a1011dfd";
     var lowerCaseBase = base.toLowerCase();
     myCache.get(lowerCaseBase, function(err, val) {
         if(!err && !isEmpty(val)) {
-            console.log("cached hit for " + base);
-            console.log(val[lowerCaseBase]["results"]);
+            // console.log("cached hit for " + base);
+            // console.log(val[lowerCaseBase]["results"]);
             res.render('display_paths.html', {
                 base: base,
                 words: val[lowerCaseBase]["results"]
             });
         } else if(!err && isEmpty(val)) {
-            console.log("cache miss for " + base);
+            // console.log("cache miss for " + base);
             var hostname = "http://www.veryrelated.com/related-api-v1.php";
             var path = hostname + "?api_key=" + api_key + "&base=" + base;
             request(path, function (error, response, body) {
@@ -81,10 +110,17 @@ app.get("/display_paths.html", function (req, res) {
                         }
                     }
                     myCache.set(lowerCaseBase, {results: final_words})
-                    res.render('display_paths.html', {
-                        base: base,
-                        words: final_words
-                    });
+                    if(final_words.length > 0){
+                        res.render('display_paths.html', {
+                            base: base,
+                            words: final_words
+                        });
+                    } else {
+                        res.render('display_paths.html', {
+                            base: base,
+                            words: ["Sorry, no results found"]
+                        });
+                    }
                 }
             });
         } else {
@@ -92,6 +128,5 @@ app.get("/display_paths.html", function (req, res) {
         }
     });
 });
-
 
 app.listen(port);
