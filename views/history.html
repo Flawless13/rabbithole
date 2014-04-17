@@ -1,12 +1,13 @@
 <html>
   <header>
-    <title>Hello there</title>
+    <title>Your History</title>
   </header>
   <head>
     <meta charset="utf-8">
     <title>Rabbithole</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
     <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="/public/javascripts/clock.js"></script>
     <link rel="stylesheet" href="/public/stylesheets/app.css">
   </head>
   <body role="document" style="">
@@ -36,7 +37,34 @@
     <div class="container theme-showcase" role="main">
 
       <div id="main_title" class="jumbotron">
-        <h1>Your Personal History</h1>
+        <h1 id="time_wasted_header">Look at how much time you have wasted!</h1>
+        <div id="start_time" class="hidden"><%= started %></div>
+        <span class="clock"></span>
+        <script>
+            clockify(new Date(Date.parse($("#start_time").text())));
+        </script>
+        <!-- <div id="timer">
+            <div id="start_time" class="hidden"><%= started %></div>
+            <div id="days" class="clock"></div><div class="clock">:</div>
+            <div id="hours" class="clock"></div><div class="clock">:</div>
+            <div id="minutes" class="clock"></div><div class="clock">:</div>
+            <div id="seconds" class="clock"></div><div class="clock">:</div>
+            <div id="milliseconds" class="clock"></div>
+        </div> -->
+        <!-- <script>
+            var start = new Date(Date.parse($("#start_time").text()));
+            var now = new Date();
+            var millisec = parseInt((now - start) / 100);
+            function pad(val) { return val > 9 ? val : "0" + val; }
+            setInterval( function(){
+                $("#milliseconds").text(pad(++millisec%10));
+                $("#seconds").text(pad(parseInt((millisec/10) % 60,10)));
+                $("#minutes").text(pad(parseInt(millisec/600,10)));
+                $("#hours").text(pad(parseInt(millisec/36000,10)));
+                $("#days").text(pad(parseInt(millisec/864000,10)));
+            }, 100);
+        </script> -->
+
       </div>
 
       <div class="row">

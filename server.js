@@ -27,6 +27,7 @@ app.get("/views", function(req, res) {
 
 app.get("/index.html", function(req, res) {
     req.session.visited = [];
+    req.session.started = new Date();
     res.render("index.html");
 })
 
@@ -50,11 +51,13 @@ function isEmpty(ob) {
 app.get("/history.html", function(req, res) {
     if(req.session.visited && req.session.visited.length > 0) {
         res.render('history.html', {
-            history: req.session.visited
+            history: req.session.visited,
+            started: req.session.started.toString()
         });
     } else {
         res.render('history.html', {
-            history: ["No History"]
+            history: ["No History"],
+            started: (new Date()).toString()
         });
     }
 })
