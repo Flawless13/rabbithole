@@ -25,10 +25,14 @@ app.get("/views", function(req, res) {
  	res.render('index.html');
 });
 
-app.get("/index.html", function(req, res) {
+app.get("/(index.html)?", function(req, res) {
     req.session.visited = [];
     req.session.started = new Date();
     res.render("index.html");
+})
+
+app.get("/about.html", function(req, res) {
+    res.render("about.html", {title: "About Us"});
 })
 
 var stopwords = [];
@@ -49,24 +53,28 @@ function isEmpty(ob) {
 }
 
 app.get("/history.html", function(req, res) {
-    if(req.session.visited && req.session.visited.length > 0) {
-        if(req.session.started) {
-            res.render('history.html', {
-                history: req.session.visited,
-                started: req.session.started.toString()
-            });
-        } else {
-            res.render('history.html', {
-                history: req.session.visited,
-                started: (new Date()).toString()
-            });
-        }
-    } else {
-        res.render('history.html', {
-            history: ["No History"],
-            started: (new Date()).toString()
-        });
-    }
+    res.render('history.html', {
+        history: req.session.visited || [],
+        started: req.session.started || (new Date()).toString()
+    });
+    // if(req.session.visited && req.session.visited.length > 0) {
+    //     if(req.session.started) {
+    //         res.render('history.html', {
+    //             history: req.session.visited,
+    //             started: req.session.started.toString()
+    //         });
+    //     } else {
+    //         res.render('history.html', {
+    //             history: req.session.visited,
+    //             started: (new Date()).toString()
+    //         });
+    //     }
+    // } else {
+    //     res.render('history.html', {
+    //         history: ["No History"],
+    //         started: (new Date()).toString()
+    //     });
+    // }
 })
 
 app.get("/pretty.html", function(req, res) {
@@ -76,7 +84,7 @@ app.get("/pretty.html", function(req, res) {
         });
     } else {
         res.render('pretty.html', {
-            words: ["No Words"]
+            words: []
         });
     }
 })
@@ -120,6 +128,7 @@ app.get("/display_paths.html", function (req, res) {
                             result = result.replace(stopwords[j], "");
                         // remove double space
                         result = result.replace(/\s+/, " ");
+                        result = result.replace(/\d+/, " ");
                         if(result.length > 1)
                             words.push(result);
                     }
@@ -140,7 +149,7 @@ app.get("/display_paths.html", function (req, res) {
                     } else {
                         res.render('display_paths.html', {
                             base: base,
-                            words: ["Sorry, no results found"]
+                            words: []
                         });
                     }
                 }
