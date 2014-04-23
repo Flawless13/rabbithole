@@ -1,5 +1,5 @@
 body {
-    background:url(../images/background.jpg) no-repeat center center fixed;
+    background:url(../images/background3.jpg) no-repeat center center fixed;
     background-size:cover;
 /*    -webkit-filter: blur(2px);
     -moz-filter: blur(2px);
@@ -209,4 +209,8 @@ body {
     -moz-transform:translate3d(0,0,0) rotateX(0);
     -ms-transform:translate3d(0,0,0) rotateX(0);
     transform:translate3d(0,0,0) rotateX(0);
+}
+
+.pad-right {
+    padding-right: 20px;
 }
