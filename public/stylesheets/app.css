@@ -214,3 +214,9 @@ body {
 .pad-right {
     padding-right: 20px;
 }
+
+img.self-portrait {
+    height: 375px;
+    width: 328px;
+    padding-bottom: 10px;
+}
