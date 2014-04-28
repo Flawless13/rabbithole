@@ -349,3 +349,7 @@ div.panel-heading {
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+
+div.fixed-length {
+    height: 470px;
+}

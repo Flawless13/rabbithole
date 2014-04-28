@@ -119,7 +119,7 @@ app.get("/get_5_words.html", function(req, res) {
                     }
                     final_words = []
                     for(i in words) {
-                        if(i < 5) {
+                        if(true) {
                             final_words.push({name: words[i]});
                         } else {
                             break;
