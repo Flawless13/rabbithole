@@ -69,117 +69,21 @@ app.get("/history.html", function(req, res) {
         history: req.session.visited || [],
         started: req.session.started || (new Date()).toString()
     });
-    // if(req.session.visited && req.session.visited.length > 0) {
-    //     if(req.session.started) {
-    //         res.render('history.html', {
-    //             history: req.session.visited,
-    //             started: req.session.started.toString()
-    //         });
-    //     } else {
-    //         res.render('history.html', {
-    //             history: req.session.visited,
-    //             started: (new Date()).toString()
-    //         });
-    //     }
-    // } else {
-    //     res.render('history.html', {
-    //         history: ["No History"],
-    //         started: (new Date()).toString()
-    //     });
-    // }
 });
 
 app.get("/random.html", function(req, res) {
     var base = getRandWord();
-    // keep track of what pages each user has visited
-    var visited = req.session.visited;
-    if(visited) {
-        if(visited[visited.length - 1] != base)
-            req.session.visited.push(base);
-    } else {
-        req.session.visited = [base];
-    }
-    // console.log(req.session.visited);
-    var api_key = "24be2c9e251e33f63b367301a1011dfd";
-    var lowerCaseBase = base.toLowerCase();
-    myCache.get(lowerCaseBase, function(err, val) {
-        if(!err && !isEmpty(val)) {
-            // console.log("cached hit for " + base);
-            // console.log(val[lowerCaseBase]["results"]);
-            res.render('display_paths.html', {
-                base: base,
-                words: val[lowerCaseBase]["results"]
-            });
-        } else if(!err && isEmpty(val)) {
-            // console.log("cache miss for " + base);
-            var hostname = "http://www.veryrelated.com/related-api-v1.php";
-            var path = hostname + "?api_key=" + api_key + "&base=" + base;
-            request(path, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var xml = new xmldoc.XmlDocument(body);
-                    var results = xml.childrenNamed("Result");
-                    var words = [];
-                    for(var i = 0; i < results.length; i++) {
-                        var result = results[i].childNamed("Text").val;
-                        // remove non-ascii
-                        result = result.replace(/([^\x00-\xFF]|\s)*$/g, '');
-                        // remove stopwords
-                        for(j in stopwords)
-                            result = result.replace(stopwords[j], "");
-                        // remove double space
-                        result = result.replace(/\s+/, " ");
-                        result = result.replace(/\d+/, " ");
-                        if(result.length > 1)
-                            words.push(result);
-                    }
-                    final_words = []
-                    for(i in words) {
-                        if(i < 5) {
-                            final_words.push(words[i]);
-                        } else {
-                            break;
-                        }
-                    }
-                    myCache.set(lowerCaseBase, {results: final_words})
-                    if(final_words.length > 0){
-                        res.render('display_paths.html', {
-                            base: base,
-                            words: final_words
-                        });
-                    } else {
-                        res.render('display_paths.html', {
-                            base: base,
-                            words: []
-                        });
-                    }
-                }
-            });
-        } else {
-            console.log("cache error");
-        }
-    });
+    res.render("pretty.html", {base: base});
 });
 
 app.get("/pretty.html", function(req, res) {
-    if(req.session.visited && req.session.visited.length > 0) {
-        res.render('pretty.html', {
-            words: req.session.visited
-        });
-    } else {
-        res.render('pretty.html', {
-            words: []
-        });
-    }
+    res.render('pretty.html', {
+        base: req.query.base
+    });
 });
 
-
-app.get("/landing_page.html", function(req, res) {
-    res.render('landing_page.html');
-});
-
-app.get("/display_paths.html", function (req, res) {
+app.get("/get_5_words.html", function(req, res) {
     var base = req.query.base;
-    // keep track of what pages each user has visited
     var visited = req.session.visited;
     if(visited) {
         if(visited[visited.length - 1] != base)
@@ -187,19 +91,12 @@ app.get("/display_paths.html", function (req, res) {
     } else {
         req.session.visited = [base];
     }
-    // console.log(req.session.visited);
     var api_key = "24be2c9e251e33f63b367301a1011dfd";
     var lowerCaseBase = base.toLowerCase();
     myCache.get(lowerCaseBase, function(err, val) {
         if(!err && !isEmpty(val)) {
-            // console.log("cached hit for " + base);
-            // console.log(val[lowerCaseBase]["results"]);
-            res.render('display_paths.html', {
-                base: base,
-                words: val[lowerCaseBase]["results"]
-            });
+            res.json({name: base, children: val[lowerCaseBase]["results"]});
         } else if(!err && isEmpty(val)) {
-            // console.log("cache miss for " + base);
             var hostname = "http://www.veryrelated.com/related-api-v1.php";
             var path = hostname + "?api_key=" + api_key + "&base=" + base;
             request(path, function (error, response, body) {
@@ -223,29 +120,26 @@ app.get("/display_paths.html", function (req, res) {
                     final_words = []
                     for(i in words) {
                         if(i < 5) {
-                            final_words.push(words[i]);
+                            final_words.push({name: words[i]});
                         } else {
                             break;
                         }
                     }
                     myCache.set(lowerCaseBase, {results: final_words})
-                    if(final_words.length > 0){
-                        res.render('display_paths.html', {
-                            base: base,
-                            words: final_words
-                        });
-                    } else {
-                        res.render('display_paths.html', {
-                            base: base,
-                            words: []
-                        });
-                    }
+                    res.json({name: base, children: final_words});
                 }
             });
         } else {
             console.log("cache error");
         }
     });
+
+})
+
+
+app.get("/display_paths.html", function (req, res) {
+    var base = req.query.base;
+    res.render("pretty.html", {base: base});
 });
 
 app.listen(port);
