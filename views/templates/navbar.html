@@ -19,7 +19,10 @@
             } else if(window.location.href.match(/history\.html/)) {
                 document.getElementById("history").classList.add("active")
             } else if(window.location.href.match(/random\.html/)) {
-                document.getElementById("random").classList.add("active")
+                document.getElementById("huge-logo").className = "";
+                document.getElementById("random").classList.add("active");
+            } else if(window.location.href.match(/display_paths\.html/)) {
+                document.getElementById("huge-logo").className = "";
             } else if(!window.location.href.match(/display_paths/)) {
                 document.getElementById("huge-logo").className = "";
                 document.getElementById("home").classList.add("active");
