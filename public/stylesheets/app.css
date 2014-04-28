@@ -220,3 +220,7 @@ img.self-portrait {
     width: 328px;
     padding-bottom: 10px;
 }
+
+div.fixed-length {
+    height: 470px;
+}
