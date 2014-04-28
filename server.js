@@ -12,7 +12,7 @@ var pub = __dirname + '/public',
 
 app.configure(function(){
     app.use(express.cookieParser());
-    app.use(express.session({secret: '1234567890QWERTY'}));
+    app.use(express.session({secret: 'FD3JF8560PIY'}));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(app.router);
