@@ -2,16 +2,14 @@
   <% include templates/header.html %>
   <body role="document" style="">
     <% include templates/navbar.html %>
-    <div class="container theme-showcase" role="main" style="width: 500px">
-      <div class="jumbotron" style="text-align: center;">
-        <h1>Rabbithole</h1>
-        <p>A site for wasting time and exploring Internet rabbit holes.</p>
-        <p><a href="http://www.veryrelated.com/">Powered by VeryRelated Mind Maps API</a></p>
-      </div>
-      <form class="search" action="display_paths.html" method="GET">
-        <input type="search" name="base" placeholder="Choose something to explore..." required>
-        <button type="submit">Explore</button>
-      </form>
+    <div class="main-header">
+        <h1>Welcome to Rabbithole</h1>
+        <p class="citation"><a href="http://www.veryrelated.com/">Powered by VeryRelated Mind Maps API</a></p>
+    </div>
+    <div class="main-body">
+        <div class="main-page-content">
+            <p>Here you can waste time and explore rabbit holes of the Internet. Just search for a word or click "Random" at the top to get started!</p>
+        </div>
     </div>
   </body>
 </html>

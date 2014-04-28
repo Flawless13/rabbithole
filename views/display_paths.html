@@ -1,37 +1,7 @@
 <html>
-  <header>
-    <title><%= base %></title>
-  </header>
-  <head>
-    <meta charset="utf-8">
-    <title>Rabbithole</title>
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
-    <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
-    <link rel="stylesheet" href="/public/stylesheets/app.css">
-  </head>
+  <% include templates/header.html %>
   <body role="document" style="">
-
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">Rabbithole</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">Home</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="about.html">About</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <% include templates/navbar.html %>
 
     <div class="container theme-showcase" role="main">
 
